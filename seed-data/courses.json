@@ -3,19 +3,22 @@
         "name": "Fisika Matematika I",
         "credits": 3,
         "lecturer": "Prof. Abdul Waris, M.Eng. Ph.D",
-        "maxStudents": 5
+        "maxStudents": 5,
+        "quota": 5
     },
     {
         "name": "Mekanika",
         "credits": 4,
         "lecturer": "Dr.Eng. Dwi Irwanto, M.Si., M.Eng.",
-        "maxStudents": 5
+        "maxStudents": 5,
+        "quota": 5
     },
     {
         "name": "Termodinamika",
         "credits": 3,
         "lecturer": "Dr.rer.nat. Freddy Haryanto",
-        "maxStudents": 5
+        "maxStudents": 5,
+        "quota": 5
     },
     {
         "name": "Elektronika",
