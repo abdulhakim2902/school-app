@@ -1,0 +1,147 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* Login Form */
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-form {
+    width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    padding: 80px;
+    border-radius: 10px;
+}
+
+.login-button {
+    width: 100%;
+}
+
+.register-option a {
+    text-decoration: none;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    height: 40px;
+}
+
+/* Register Form */
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.register-form {
+    width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.register-form h4 span {
+    float: right;
+    font-size: 15px;
+    margin-top: 12px;
+}
+
+.register-button {
+    width: 100%;
+    margin-top: 65px;
+}
+
+/* Table */
+.table-container {
+    width: 1000px;
+}
+
+.table-container th, .table-container td {
+    text-align: center;
+}
+
+.error-message {
+    color: red;
+    height: 23px;
+}
+
+.detail {
+    height: 150px;
+}
+
+.detail-student {
+    width: 600px;
+    margin-left: 35px;
+    float: left;
+}
+
+.student-info {
+    background-color: rgb(238, 238, 238);
+    padding: 15px 25px;
+    border-radius: 10px;
+}
+
+.detail-img {
+    float: right;
+    margin-right: 35px;
+    padding: 10px;
+    border-radius: 10px;
+    height: 140px;
+    overflow: hidden;
+}
+
+.detail-img img {
+    border-radius: 10px;
+}
+
+/* Profile Container */
+.profile-container {
+    width: 1000px;
+}
+
+.img-profile {
+    float: left;
+    height: 253px;
+}
+
+.img-profile .image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.img-profile img {
+    border-radius: 10px;
+}
+
+.info-profile {
+    float: right;
+    width: 800px;
+    height: 253px;
+}
+
+.img-profile a {
+    display: block;
+}
+
+.profile-container th, .profile-container td {
+    text-align: left;
+}
+
+.upload-file {
+    margin-top: 65px;
+}
