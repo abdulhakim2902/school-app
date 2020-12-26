@@ -13,6 +13,8 @@
                 <li class="nav-item">
                     <a class="nav-link <%= nav === 'profile' ? 'active' : '' %>" href="/student/profile">Profile</a>
                 </li>
+
+                <% if (user.role == 2 )
                 <li class="nav-item">
                     <a class="nav-link <%= nav === 'subjects' ? 'active' : '' %>" href="/student/subjects">Subjects</a>
                 </li>

@@ -16,7 +16,7 @@ class Controller {
                 }
             }
         })
-            .then(student => res.render('studentPage/student-page', { student }))
+            .then(user => res.render('studentPage/student-page', { student }))
             .catch(err => res.send(err.message))
         
     }

@@ -30,11 +30,13 @@ class Controller {
                 } else {
                     let isValidPassword = comparePassword(user.password, isUser.password);
 
-                    if (user.role === 1 && isValidPassword) {
+                    if (user.role === isUser.role && isValidPassword) {
                         req.session.userId = user.id
+                        req.session.role = user.role
                         res.redirect('/student')
-                    } else if (user.role === 2 && isValidPassword) {
+                    } else if (user.role === isUser.role && isValidPassword) {
                         req.session.userId = user.id
+                        req.session.role = user.role
                         res.redirect('/admin')
                     } else {
                         res.redirect(`/login?msg=${"The username and role that you've entered doesn't match any account."}`)
@@ -79,6 +81,7 @@ class Controller {
 
     static logout(req, res) {
         req.session.userId = 0;
+        req.session.role = 0;
         res.redirect('/login')
     }
 }

@@ -8,10 +8,27 @@ const isLogin = (req, res, next) => {
 
 const sessionChecker = (req, res, next) => {
     if (req.session.userId) {
-        res.redirect(`/student`)
+        if (req.session.role == 1) res.redirect(`/student`);
+        else if (req.session.role == 2) res.redirect('/admin')
     } else {
         next()
     }
 }
 
-module.exports = { isLogin, sessionChecker }
+const isAdmin = (req, res, next) => {
+    if (req.session.role == 2) {
+        next()
+    } else {
+        res.redirect('/login')
+    }
+}
+
+const isStudent = (req, res, next) => {
+    if (req.session.role == 1) {
+        next()
+    } else {
+        res.redirect('/login')
+    }
+}
+
+module.exports = { isLogin, sessionChecker, isAdmin, isStudent }
