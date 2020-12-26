@@ -1,4 +1,4 @@
-const { User, Subject, UserSubject } = require('../models')
+const { User, Subject, Lecturer, UserSubject } = require('../models')
 const fs = require('fs')
 
 class Controller {
@@ -9,6 +9,7 @@ class Controller {
             where: { id },
             include: {
                 model: Subject,
+                include: Lecturer,
                 through: {
                     where: {
                         is_taken: true
@@ -93,15 +94,20 @@ class Controller {
         }
 
         Subject.findAll({
-            include: {
-                model: User,
-                through: {
-                    where: {
-                        user_id: id
-                    },
-                    attributes: ['is_taken']
+            include: [
+                {
+                    model: User,
+                    through: {
+                        where: {
+                            user_id: id
+                        },
+                        attributes: ['is_taken']
+                    }
+                },
+                {
+                    model: Lecturer
                 }
-            }
+            ]
         })
             .then(subjects => {
                 subjects.forEach(subject => {
@@ -219,14 +225,19 @@ class Controller {
             where: {
                 id: subjectId
             },
-            include: {
-                model: User,
-                through: {
-                    where: {
-                        is_taken: true
+            include: [
+                {
+                    model: User,
+                    through: {
+                        where: {
+                            is_taken: true
+                        }
                     }
+                },
+                {
+                    model: Lecturer
                 }
-            }
+            ]
         })  
             .then(subject => res.render('studentPage/detail-page', { subject, status: 'student' }))
             .catch(err => res.send(err.message))

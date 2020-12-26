@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const upload = require('../middleware/uploadMulter')
-const Controller = require('../controllers/adminController');
+const Controller = require('../controllers/AdminController');
 
 router.get('/', Controller.adminPage);
 router.get('/profile', Controller.profilePage);

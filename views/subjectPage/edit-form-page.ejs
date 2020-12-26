@@ -33,8 +33,14 @@
                 </div>
 
                 <label class="mb-1" for="lecturer">Lecturer</label>
-                <div>
-                    <input type="text" class="form-control" name="lecturer" value="<%= subject.lecturer %>" required>
+                <div class="input-group mb-3">
+                    <select name="lecturer_id" class="form-control">
+                        <% lecturers.forEach(lecturer=> { %>
+                            <option <%= lecturer.id === subject.Lecturer.id ? 'selected' : '' %>  value="<%= lecturer.id %>">
+                                <%= lecturer.name  %>
+                            </option>
+                            <% }) %>
+                    </select>
                 </div>
 
                 <label class="mb-1">Credits</label>

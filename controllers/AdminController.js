@@ -82,14 +82,23 @@ class Controller {
 
     static editSubjectForm(req, res) {
         let id = req.params.subjectId;
+        let lecturers = [];
         let error = '';
 
         if (req.query.msg) {
             error = req.query.msg
         }
 
-        Subject.findOne({where: {id}})
-            .then(subject => res.render('subjectPage/edit-form-page', { subject, error }))
+        Lecturer.findAll()
+            .then(getLecturers => {
+                lecturers = getLecturers;
+
+                return Subject.findOne({ 
+                    where: { id },
+                    include: Lecturer
+                })
+            })
+            .then(subject => res.render('subjectPage/edit-form-page', { subject, lecturers, error }))
             .catch(err => res.send(err.message))
     }
 
@@ -98,7 +107,7 @@ class Controller {
 
         let editSubject = {
             name: req.body.name,
-            lecturer: req.body.lecturer,
+            lecturer_id: req.body.lecturer_id,
             credits: req.body.credits,
             maxStudents: req.body.maxStudents
         }
