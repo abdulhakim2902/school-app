@@ -12,14 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Subject.belongsToMany(models.User, {foreignKey: 'subject_id', through: 'UserSubjects'})
+      Subject.belongsTo(models.Lecturer, {foreignKey: 'lecturer_id'})
     }
   };
   Subject.init({
     name: DataTypes.STRING,
-    lecturer: DataTypes.STRING,
     credits: DataTypes.INTEGER,
     maxStudents: DataTypes.INTEGER,
-    quota: DataTypes.INTEGER
+    quota: DataTypes.INTEGER,
+    lecturer_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Subject',

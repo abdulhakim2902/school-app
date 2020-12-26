@@ -54,7 +54,7 @@
                 <tr>
                     <td class="align-middle"><%= subject.name %></td>
                     <td class="align-middle"><%= subject.credits %></td>
-                    <td class="align-middle"><%= subject.lecturer %></td>
+                    <td class="align-middle"><%= subject.Lecturer.name %></td>
                     <td class="align-middle"><a class="btn btn-primary btn-sm" href="/student/detail/<%= subject.id %>" role="button">Detail</a> <a class="btn btn-danger btn-sm" href="/student/untake/<%= subject.id %>" role="button">Untake</a></td>
                 </tr>
 
@@ -66,7 +66,11 @@
             <tfoot>
                 <tr id="border">
                     <td class="align-middle">Total Credits</td>
-                    <td class="align-middle"><%= totalCredits %></td>
+                    <td class="align-middle"><%= totalCredits %> credits</td>
+                </tr>
+                <tr id="border">
+                    <td class="align-middle">Total Subjects</td>
+                    <td class="align-middle"><%= student.Subjects.length %> subjects</td>
                 </tr>
             </tfoot>
         </table>

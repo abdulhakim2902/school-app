@@ -25,6 +25,10 @@ a {
     border-radius: 10px;
 }
 
+.login-container #basic-addon1 {
+    width: 45.97px;
+}
+
 .login-button {
     width: 100%;
 }

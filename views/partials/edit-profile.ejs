@@ -1,0 +1,53 @@
+<div class="register-container">
+    <div class="register-form">
+        <h4 class="mb-5">Edit Profile</h4>
+
+        <form action="/<%= status %>/profile/edit" method="POST" enctype="multipart/form-data">
+
+            <label class="mb-1" for="firstName">Full Name</label>
+            <div class="input-group mb-3">
+                <input type="text" name="firstName" class="form-control" placeholder="First Name"
+                    value="<%= user.firstName %>" required>
+                <input type="text" name="lastName" class="form-control" placeholder="Last Name"
+                    value="<%= user.lastName %>">
+            </div>
+
+            <label class="mb-1" for="birthDate">Place & date of birth </label>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" name="birthPlace" required value="<%= user.birthPlace %>"
+                    placeholder="Birth Place">
+                <input type="date" class="form-control" name="birthDate" required value="<%= user.birthDate %>">
+            </div>
+
+            <label class="mb-1">Gender</label>
+            <div class="mb-3">
+                <input <%=user.gender==='male' ? 'checked' : '' %> type="radio" class="btn-check" name="gender"
+                id="success-outlined" autocomplete="off"
+                value="male">
+                <label style="width: 48%; float: left" class="btn btn-outline-success"
+                    for="success-outlined">Male</label>
+
+                <input <%=user.gender==='female' ? 'checked' : '' %> type="radio" class="btn-check" name="gender"
+                id="danger-outlined" autocomplete="off"
+                value="female">
+                <label style="width: 48%; float: right" class="btn btn-outline-danger"
+                    for="danger-outlined">Female</label>
+            </div>
+
+            <div class="input-group mb-5 register-button">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="validatedCustomFile"
+                        aria-describedby="inputGroupFileAddon01" name="profileImg">
+                    <label style="width: 100%" class="mx-auto custom-file-label" for="validatedCustomFile">Choose
+                        profile image</label>
+                </div>
+            </div>
+
+            <div style="margin-top: 0;" class="d-grid gap-2 mx-auto register-button">
+                <button style="width: 100%" class="btn btn-primary">Update</button>
+                <a style="width: 100%" href="/<%= status %>/profile" class="btn btn-info btn-danger" role="button">Cancel</a>
+            </div>
+
+        </form>
+    </div>
+</div>
