@@ -1,0 +1,63 @@
+<div class="profile-container mx-auto mt-5">
+    <h4 class="mb-5">Student Profile</h4>
+    <div class="img-profile">
+        <div class="image">
+            <img width="150" src="/uploads/img/<%= user.profileImg ? user.profileImg : 'default.png' %>"
+                alt="">
+        </div>
+
+        <a class="btn btn-primary mt-4" href="/<%= status %>/profile/edit" role="button">Edit Profile</a>
+    </div>
+    <div class="info-profile pt-3">
+        <table class="table table-borderless">
+            <tr>
+                <td><strong>Fullname</strong></td>
+                <td>:</td>
+                <td>
+                    <%= user.fullname() %>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>:</td>
+                <td>
+                    <%= user.email %>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Place & date of birth</strong></td>
+                <td>:</td>
+                <td>
+                    <%= formatBirth(user.birthPlace, user.birthDate) %>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Gender</strong></td>
+                <td>:</td>
+                <td>
+                    <%= user.gender %>
+                </td>
+            </tr>
+
+            <% if (status === 'student') { %> 
+
+            <tr>
+                <td><strong>Subjects Taken</strong></td>
+                <td>:</td>
+                <td>
+                    <%= user.Subjects.length %> subjects
+                </td>
+            </tr>
+            
+            <tr>
+                <td><strong>Total Credits</strong></td>
+                <td>:</td>
+                <td>
+                    <%= totalCredits %> credits
+                </td>
+            </tr>
+
+            <% } %>
+        </table>
+    </div>
+</div>

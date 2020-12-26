@@ -5,9 +5,9 @@ const Controller = require('../controllers/UserController');
 const { isLogin,sessionChecker, isAdmin, isStudent } = require('../middleware/auth');
 
 router.use('/student', isLogin, isStudent, studentRouter)
-router.get('/logout', isLogin, isStudent, Controller.logout)
-
 router.use('/admin', isLogin, isAdmin, adminRouter)
+
+router.get('/logout', isLogin, Controller.logout)
 
 router.use(sessionChecker)
 router.get('/', Controller.loginForm);

@@ -16,9 +16,8 @@ class Controller {
                 }
             }
         })
-            .then(user => res.render('studentPage/student-page', { student }))
-            .catch(err => res.send(err.message))
-        
+            .then(student => res.render('studentPage/student-page', { student, status: 'student' }))  
+            .catch(err => res.send(err.message))  
     }
 
     static profilePage(req, res) {
@@ -42,17 +41,17 @@ class Controller {
                 })
             })
             .then(student => {
-                res.render('studentPage/profile-page', { student, totalCredits }) 
+                res.render('studentPage/profile-page', { user: student, totalCredits, status: 'student'  }) 
             })
             .catch(err => res.send(err))
                
-    }
+    }  
     
     static editProfileForm(req, res) {
         let id = req.session.userId;
 
         User.findOne({where: {id}})
-            .then(student => res.render('studentPage/edit-profile-page', {student}))
+            .then(student => res.render('studentPage/edit-profile-page', { user: student, status: 'student' }))
             .catch(err => res.send(err.message))
         
     }
@@ -113,7 +112,7 @@ class Controller {
                     }
                 })
 
-                res.render('studentPage/subjects-page', { subjects: untakeSubject, error })
+                res.render('studentPage/subjects-page', { subjects: untakeSubject, error, status: 'student'  })
             })
             .catch(err => res.send(err))
     }
@@ -229,7 +228,7 @@ class Controller {
                 }
             }
         })  
-            .then(subject => res.render('studentPage/detail-page', { subject }))
+            .then(subject => res.render('studentPage/detail-page', { subject, status: 'student' }))
             .catch(err => res.send(err.message))
     }
 }
