@@ -44,7 +44,7 @@
                         <%= subject.credits %>
                     </td>
                     <td class="align-middle">
-                        <%= subject.lecturer %>
+                        <%= subject.Lecturer.name %>
                     </td>
                     <td class="align-middle">
                         <%= subject.maxStudents %>
@@ -53,10 +53,39 @@
                         <a class="btn btn-primary btn-sm" href="/<%= status %>/edit/<%= subject.id %>" role="button">Edit</a>
                         <a class="btn btn-danger btn-sm" href="/<%= status %>/delete/<%= subject.id %>" role="button">Delete</a>
                     </td>
-                    <!-- <td class="align-middle"> <a
-                                            class="btn btn-danger btn-sm" href="/student/untake/<%= subject.id %>"
-                                            role="button">Untake</a></td> -->
                 </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-container mx-auto mt-5">
+        <h4>Lecturers List</h4>
+        <a style="float: right;" class="btn btn-success mb-3" href="/<%= status %>/add-lecturer" role="button">Add Lecturer</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Lecturer Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+    
+                <% lecturers.forEach((lecturer, index) => { %>
+                    <tr>
+                        <td class="align-middle"><%= index + 1 %></td>
+                        <td class="align-middle">
+                            <%= lecturer.name %>
+                        </td>
+                        <td class="align-middle">
+                            <a class="btn btn-primary btn-sm" href="/<%= status %>/edit-lecturer/<%= lecturer.id %>"
+                                role="button">Edit</a>
+                            <a class="btn btn-danger btn-sm" href="/<%= status %>/delete-lecturer/<%= lecturer.id %>"
+                                role="button">Delete</a>
+                        </td>
+                    </tr>
                 <% }) %>
             </tbody>
         </table>

@@ -1,12 +1,19 @@
-const { User, Subject, UserSubject } = require('../models');
+const { User, Subject, Lecturer, UserSubject } = require('../models');
 
 class Controller {
     static adminPage(req, res) {
-        let id = req.session.userId;
+        let lecturers = [];
 
-        Subject.findAll()
+        Lecturer.findAll()
+            .then(getLecturers => {
+                lecturers = getLecturers;
+
+                return Subject.findAll({
+                    include: Lecturer
+                })
+            })
             .then(subjects => {
-                res.render('adminPage/admin-page', { subjects, status: 'admin' })
+                res.render('adminPage/admin-page', { subjects, lecturers, status: 'admin' })
             })
     }
 
@@ -54,16 +61,18 @@ class Controller {
     }
 
     static addSubjectForm(req, res) {
-        req.render('subjectPage/add-form-page')
+        Lecturer.findAll()
+            .then(lecturers => res.render('subjectPage/add-form-page', { lecturers }))
+            .catch(err => res.send(err.message))
     }
 
     static addSubject(req, res) {
         let newSubject = {
             name: req.body.name,
-            lecturer: req.body.lecturer,
             credits: req.body.credits,
             maxStudents: req.body.maxStudents,
-            quota: req.body.maxStudents
+            quota: req.body.maxStudents,
+            lecturer_id: req.body.lecturer_id
         }
 
         Subject.create(newSubject)
@@ -102,7 +111,7 @@ class Controller {
 
                 editSubject.quota = updatedQuota;
                 
-                if (updatedQuota > 0) {
+                if (updatedQuota >= 0) {
                     return Subject.update(editSubject, {where: {id}})
                 } else {
                     throw new Error('The quota cannot be less than zero')
@@ -116,6 +125,35 @@ class Controller {
         let id = req.params.subjectId;
 
         Subject.destroy({where: {id}})
+            .then(() => res.redirect('/admin'))
+            .catch(err => res.send(err.message))
+    }
+
+    static addLecturerForm(req, res) {
+        res.render('lecturerPage/add-lecturer-form-page')
+    }
+
+    static addLecturer(req, res) {
+        let { frontTitle, backTitle, firstName, lastName } = req.body;
+        let name = `${frontTitle ? frontTitle : ''} ${firstName} ${lastName} ${backTitle ? backTitle : ''}`.trim()
+        
+        Lecturer.create({name})
+            .then(() => res.redirect('/admin'))
+            .catch(err => res.send(err.message))
+    }
+
+    static editLecturerForm (req, res) {
+        
+    }
+
+    static editLecturer(req, res) {
+
+    }
+
+    static deleteLecturer(req,res) {
+        let id = req.params.lecturerId;
+
+        Lecturer.destroy({where: {id}})
             .then(() => res.redirect('/admin'))
             .catch(err => res.send(err.message))
     }
