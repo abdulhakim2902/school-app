@@ -15,24 +15,29 @@ class Controller {
     static login(req, res) {
         let isUser = {
             username: req.body.username,
-            password: req.body.password
+            password: req.body.password,
+            role: +req.body.role
         }
+
+        console.log(isUser);
         
         User.findOne({
             where: { username: isUser.username }
         })
             .then(user => {
                 if (!user) {
-                    res.redirect(`/login?msg=${"The username that you've entered doesn't match any account."}`)
+                    res.redirect(`/login?msg=${"The username and role that you've entered doesn't match any account."}`)
                 } else {
                     let isValidPassword = comparePassword(user.password, isUser.password);
 
-                    if (isValidPassword) {
-                        req.session.userId = user.id;
-                        // console.log(req.session);
-                        res.redirect(`/student`)
+                    if (user.role === 1 && isValidPassword) {
+                        req.session.userId = user.id
+                        res.redirect('/student')
+                    } else if (user.role === 2 && isValidPassword) {
+                        req.session.userId = user.id
+                        res.redirect('/admin')
                     } else {
-                        res.redirect(`/login?msg=${"The username that you've entered doesn't match any account."}`)
+                        res.redirect(`/login?msg=${"The username and role that you've entered doesn't match any account."}`)
                     }
                 }
             })
