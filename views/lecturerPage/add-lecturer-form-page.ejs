@@ -12,16 +12,40 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
         integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="/css/style.css">
 
-    <title>Edit Profile</title>
+    <title>Add Lecturer</title>
 </head>
 
 <body>
     <!-- Navbar -->
-    <%- include('../partials/edit-profile') %>   
+    <div class="register-container">
+        <div class="register-form">
+            <h4 class="mb-5">Add lecturer</h4>
+
+            <form action="/admin/add-lecturer" method="POST">
+                <label class="mb-1">Title</label>
+                <div class="input-group mb-3">
+                    <input type="text" name="frontTitle" class="form-control" placeholder="Front Title">
+                    <input type="text" name="backTitle" class="form-control" placeholder="Last Title">
+                </div>
+
+                <label class="mb-1">Lecturer name</label>
+                <div class="input-group mb-5">
+                    <input type="text" name="firstName" class="form-control" placeholder="First Name" required>
+                    <input type="text" name="lastName" class="form-control" placeholder="Last Name" required>
+                </div>
+
+                <div style="margin-top: 0;" class="d-grid gap-2 mx-auto register-button">
+                    <button style="width: 100%" class="btn btn-primary">Add New Lecturer</button>
+                    <a style="width: 100%" href="/admin" class="btn btn-info btn-danger" role="button">Cancel</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

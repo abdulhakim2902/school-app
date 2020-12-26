@@ -70,7 +70,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     birthPlace: DataTypes.STRING,
     birthDate: DataTypes.DATEONLY,
-    profileImg: DataTypes.STRING
+    profileImg: DataTypes.STRING,
+    role: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'User',

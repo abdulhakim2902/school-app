@@ -1,4 +1,4 @@
-const { User, Subject, UserSubject } = require('../models')
+const { User, Subject, Lecturer, UserSubject } = require('../models')
 const fs = require('fs')
 
 class Controller {
@@ -9,6 +9,7 @@ class Controller {
             where: { id },
             include: {
                 model: Subject,
+                include: Lecturer,
                 through: {
                     where: {
                         is_taken: true
@@ -16,9 +17,8 @@ class Controller {
                 }
             }
         })
-            .then(student => res.render('studentPage/student-page', { student }))
-            .catch(err => res.send(err.message))
-        
+            .then(student => res.render('studentPage/student-page', { student, status: 'student' }))  
+            .catch(err => res.send(err.message))  
     }
 
     static profilePage(req, res) {
@@ -42,17 +42,17 @@ class Controller {
                 })
             })
             .then(student => {
-                res.render('studentPage/profile-page', { student, totalCredits }) 
+                res.render('studentPage/profile-page', { user: student, totalCredits, status: 'student'  }) 
             })
             .catch(err => res.send(err))
                
-    }
+    }  
     
     static editProfileForm(req, res) {
         let id = req.session.userId;
 
         User.findOne({where: {id}})
-            .then(student => res.render('studentPage/edit-profile-page', {student}))
+            .then(student => res.render('studentPage/edit-profile-page', { user: student, status: 'student' }))
             .catch(err => res.send(err.message))
         
     }
@@ -94,15 +94,20 @@ class Controller {
         }
 
         Subject.findAll({
-            include: {
-                model: User,
-                through: {
-                    where: {
-                        user_id: id
-                    },
-                    attributes: ['is_taken']
+            include: [
+                {
+                    model: User,
+                    through: {
+                        where: {
+                            user_id: id
+                        },
+                        attributes: ['is_taken']
+                    }
+                },
+                {
+                    model: Lecturer
                 }
-            }
+            ]
         })
             .then(subjects => {
                 subjects.forEach(subject => {
@@ -113,7 +118,7 @@ class Controller {
                     }
                 })
 
-                res.render('studentPage/subjects-page', { subjects: untakeSubject, error })
+                res.render('studentPage/subjects-page', { subjects: untakeSubject, error, status: 'student'  })
             })
             .catch(err => res.send(err))
     }
@@ -220,16 +225,21 @@ class Controller {
             where: {
                 id: subjectId
             },
-            include: {
-                model: User,
-                through: {
-                    where: {
-                        is_taken: true
+            include: [
+                {
+                    model: User,
+                    through: {
+                        where: {
+                            is_taken: true
+                        }
                     }
+                },
+                {
+                    model: Lecturer
                 }
-            }
+            ]
         })  
-            .then(subject => res.render('studentPage/detail-page', { subject }))
+            .then(subject => res.render('studentPage/detail-page', { subject, status: 'student' }))
             .catch(err => res.send(err.message))
     }
 }

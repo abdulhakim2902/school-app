@@ -13,7 +13,9 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id'
-        }
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade'
       },
       subject_id: {
         type: Sequelize.INTEGER,
