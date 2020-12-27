@@ -1,7 +1,7 @@
-const { User, Subject, Lecturer, UserSubject } = require('../models');
+const { User, Subject, Lecturer } = require('../models');
 
 class Controller {
-    static adminPage(req, res) {
+    static adminPage( req, res ) {
         let lecturers = [];
 
         Lecturer.findAll()
@@ -13,27 +13,28 @@ class Controller {
                 })
             })
             .then(subjects => {
-                res.render('adminPage/admin-page', { subjects, lecturers, status: 'admin' })
+                res.render( 'adminPage/admin-page', { subjects, lecturers, status: 'admin' })
             })
+            .catch( err => res.send( err.message ))
     }
 
-    static profilePage(req, res) {
+    static profilePage( req, res ) {
         let id = req.session.userId;
 
-        User.findOne({where: {id}})
-            .then(admin => res.render('adminPage/profile-page', { user: admin, status: 'admin' }))
-            .catch(err => res.send(err.message))
+        User.findOne({ where: { id }})
+            .then( admin => res.render( 'adminPage/profile-page', { user: admin, status: 'admin' }))
+            .catch( err => res.send( err.message ))
     }
 
-    static editProfileForm(req, res) {
+    static editProfileForm( req, res ) {
         let id = req.session.userId;
 
-        User.findOne({where: {id}})
-            .then(admin => res.render('adminPage/edit-profile-page', { user: admin, status: 'admin' }))
-            .catch(err => res.send(err.message))
+        User.findOne({ where: { id }})
+            .then( admin => res.render( 'adminPage/edit-profile-page', { user: admin, status: 'admin' }))
+            .catch( err => res.send( err.message ))
     }
 
-    static editProfile(req, res) {
+    static editProfile( req, res ) {
         let id = req.session.userId;
         let imgFile = req.file;
 
@@ -46,27 +47,26 @@ class Controller {
         }
 
         User.findOne({ where: { id } })
-            .then(admin => {
-                if (imgFile) {
+            .then( admin => {
+                if ( imgFile ) {
                     editUser.profileImg = imgFile.filename;
-                    if (admin.profileImg) {
-                        fs.unlinkSync(`./public/uploads/img/${admin.profileImg}`)
-                    }
+
+                    if (admin.profileImg) fs.unlinkSync(`./public/uploads/img/${admin.profileImg}`)
                 }
 
-                return User.update(editUser, { where: { id } })
+                return User.update( editUser, { where: { id }})
             })
-            .then(() => res.redirect('/admin/profile'))
-            .catch(err => res.send(err.message))
+            .then(() => res.redirect( '/admin/profile' ))
+            .catch( err => res.send( err.message ))
     }
 
-    static addSubjectForm(req, res) {
+    static addSubjectForm( req, res ) {
         Lecturer.findAll()
-            .then(lecturers => res.render('subjectPage/add-form-page', { lecturers }))
-            .catch(err => res.send(err.message))
+            .then( lecturers => res.render( 'subjectPage/add-form-page', { lecturers }))
+            .catch( err => res.send( err.message ))
     }
 
-    static addSubject(req, res) {
+    static addSubject( req, res ) {
         let newSubject = {
             name: req.body.name,
             credits: req.body.credits,
@@ -80,17 +80,15 @@ class Controller {
             .catch(err => res.send(err.message))
     }
 
-    static editSubjectForm(req, res) {
+    static editSubjectForm( req, res ) {
         let id = req.params.subjectId;
         let lecturers = [];
         let error = '';
 
-        if (req.query.msg) {
-            error = req.query.msg
-        }
+        if (req.query.msg) error = req.query.msg
 
         Lecturer.findAll()
-            .then(getLecturers => {
+            .then( getLecturers => {
                 lecturers = getLecturers;
 
                 return Subject.findOne({ 
@@ -98,11 +96,11 @@ class Controller {
                     include: Lecturer
                 })
             })
-            .then(subject => res.render('subjectPage/edit-form-page', { subject, lecturers, error }))
-            .catch(err => res.send(err.message))
+            .then( subject => res.render( 'subjectPage/edit-form-page', { subject, lecturers, error }))
+            .catch( err => res.send( err.message ))
     }
 
-    static editSubject(req, res) {
+    static editSubject( req, res ) {
         let id = req.params.subjectId;
 
         let editSubject = {
@@ -112,43 +110,40 @@ class Controller {
             maxStudents: req.body.maxStudents
         }
 
-        Subject.findOne({where: {id}})
+        Subject.findOne({ where: { id }})
             .then(subject => {
                 let currentMaxStudents = subject.maxStudents;
                 let currentQuota = subject.quota;
-                let updatedQuota = currentQuota + (editSubject.maxStudents - currentMaxStudents);
+                let updatedQuota = currentQuota + ( editSubject.maxStudents - currentMaxStudents );
 
                 editSubject.quota = updatedQuota;
                 
-                if (updatedQuota >= 0) {
-                    return Subject.update(editSubject, {where: {id}})
-                } else {
-                    throw new Error('The quota cannot be less than zero')
-                }
+                if ( updatedQuota >= 0 ) return Subject.update( editSubject, { where: { id }})
+                else throw new Error( 'The quota cannot be less than zero' )
             })
-            .then(() => res.redirect('/admin'))
-            .catch(err => res.redirect(`/admin/edit/${id}?msg=${err}`))
+            .then(() => res.redirect( '/admin' ))
+            .catch( err => res.redirect( `/admin/edit/${ id }?msg=${ err }`))
     }
 
-    static deleteSubject(req, res) {
+    static deleteSubject( req, res ) {
         let id = req.params.subjectId;
 
-        Subject.destroy({where: {id}})
+        Subject.destroy({ where: { id }})
             .then(() => res.redirect('/admin'))
-            .catch(err => res.send(err.message))
+            .catch( err => res.send( err.message ))
     }
 
-    static addLecturerForm(req, res) {
-        res.render('lecturerPage/add-lecturer-form-page')
+    static addLecturerForm( req, res ) {
+        res.render( 'lecturerPage/add-lecturer-form-page' )
     }
 
-    static addLecturer(req, res) {
+    static addLecturer( req, res ) {
         let { frontTitle, backTitle, firstName, lastName } = req.body;
-        let name = `${frontTitle ? frontTitle : ''} ${firstName} ${lastName} ${backTitle ? backTitle : ''}`.trim()
+        let name = `${ frontTitle ? frontTitle : ''} ${ firstName } ${ lastName } ${ backTitle ? backTitle : '' }`.trim()
         
-        Lecturer.create({name})
-            .then(() => res.redirect('/admin'))
-            .catch(err => res.send(err.message))
+        Lecturer.create({ name })
+            .then(() => res.redirect( '/admin' ))
+            .catch( err => res.send( err.message ))
     }
 
     static editLecturerForm (req, res) {

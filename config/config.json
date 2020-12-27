@@ -19,5 +19,13 @@
     "database": "daqrb6cc920jde",
     "host": "ec2-52-44-235-121.compute-1.amazonaws.com",
     "dialect": "postgres"
+  },
+  "sessionConfig": {
+    "secret": "hacktiv8",
+    "resave": false,
+    "saveUninitialized": false,
+    "cookie": {
+      "secure": false
+    }
   }
 }
